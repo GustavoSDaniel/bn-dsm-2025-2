@@ -23,5 +23,10 @@ app.use('/categorias', categoriasRouter)
 import clientesRouter from './routes/clientes.js'
 app.use('/clientes', clientesRouter)
 
+import fornecedorRouter from './routes/fornecedor.js'  
+app.use('/fornecedores', fornecedorRouter)  // Rota plural (mais comum)
+
+import pedidosRouter from './routes/pedido.js'
+app.use('/pedidos', pedidosRouter)
 
 export default app
