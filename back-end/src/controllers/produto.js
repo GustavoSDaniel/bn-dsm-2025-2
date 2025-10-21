@@ -5,8 +5,14 @@ import prisma from '../database/client.js'
 const controller = {}   // Objeto vazio
 
 controller.create = async function(req, res) {
+  /*
+    Conecta-se ao banco de dados e envia uma instrução
+    de criação de um novo documento, contendo os dados
+    que chegaram dentro da seção "body" da requisição
+    ("req")
+  */
   try {
-    await prisma.fornecedor.create({ data: req.body })
+    await prisma.produto.create({ data: req.body })
 
     // Envia um código de sucesso ao front-end
     // HTTP 201: Created
@@ -81,7 +87,7 @@ controller.update = async function(req, res) {
   try {
     // Busca o documento passado como parâmetro e, caso o documento seja
     // encontrado, atualiza-o com as informações contidas em req.body
-    await prisma.fornecedor.update({
+    await prisma.produto.update({
       where: { id: req.params.id },
       data: req.body
     })
@@ -110,7 +116,7 @@ controller.delete = async function(req, res) {
   try {
     // Busca o documento pelo id passado como parâmetro
     // e efetua a exclusão, caso o documento seja encontrado
-    await prisma.fornecedor.delete({
+    await prisma.produto.delete({
       where: { id: req.params.id }
     })
 

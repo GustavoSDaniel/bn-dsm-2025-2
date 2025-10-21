@@ -29,4 +29,7 @@ app.use('/fornecedores', fornecedorRouter)  // Rota plural (mais comum)
 import pedidosRouter from './routes/pedido.js'
 app.use('/pedidos', pedidosRouter)
 
+import produtoRouter from './routes/produto.js'
+app.use('/produto', produtoRouter)
+
 export default app
