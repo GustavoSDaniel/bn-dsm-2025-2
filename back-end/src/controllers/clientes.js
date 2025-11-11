@@ -1,4 +1,5 @@
 import prisma from '../database/client.js'
+import { includeRelations } from '../lib/utils.js'
 
 const controller = {}   // Objeto vazio
 
@@ -28,8 +29,12 @@ controller.create = async function(req, res) {
 
 controller.retrieveAll = async function(req, res) {
   try {
+    // 2. Usar a função para ler a URL (ex: ?include=pedidos)
+    const include = includeRelations(req.query)
+
     // Manda buscar todas as clientes cadastradas no BD
     const result = await prisma.cliente.findMany({
+      include, // 3. Passar o include para o Prisma
       orderBy: [ { nome: 'asc' }]  // Ordem ASCendente
     })
 
@@ -49,10 +54,14 @@ controller.retrieveAll = async function(req, res) {
 
 controller.retrieveOne = async function(req, res) {
   try {
+    // 4. Usar a função aqui também
+    const include = includeRelations(req.query)
+
     // Manda recuperar o documento no servidor de BD
     // usando como critério um id informado no parâmetro
     // da requisição
     const result = await prisma.cliente.findUnique({
+      include, // 5. Passar o include para o Prisma
       where: { id: req.params.id }
     })
 
@@ -73,11 +82,15 @@ controller.retrieveOne = async function(req, res) {
 
 controller.update = async function(req, res) {
   try {
+    // 6. Correção do update (remover o id do body)
+    const dados = req.body
+    delete dados.id 
+
     // Busca o documento passado como parâmetro e, caso o documento seja
     // encontrado, atualiza-o com as informações contidas em req.body
     await prisma.cliente.update({
       where: { id: req.params.id },
-      data: req.body
+      data: dados
     })
 
     // Encontrou e atualizou ~> retorna HTTP 204: No Content
